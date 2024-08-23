@@ -42,3 +42,19 @@ todosIguales :: [Int] -> Bool
 todosIguales [] = True
 todosIguales[_] = True
 todosIguales (x:y:xs) = ((x == y) && todosIguales(y:xs)) 
+
+--ej5
+data AB a = Nil | Bin (AB a) a (AB a)
+
+vacioAB :: AB a -> Bool
+vacioAb Nil = True
+vacio (Bin i r d) = False
+
+negacionAB :: AB Bool -> AB Bool
+negacionAB Nil = Nil
+negacionAB (Bin i r d) = Bin (negacionAB i) (not r) (negacionAB d)
+
+productoAB :: AB Int -> Int
+productoAB Nil = 1
+productoAB (Bin i r d) = r * (productoAB i) * (productoAB d)
+
