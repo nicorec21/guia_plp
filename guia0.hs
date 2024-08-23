@@ -30,3 +30,15 @@ limpiar :: String -> String -> String
 limpiar xs [] = [] 
 limpiar xs (y:ys) | (y `elem` xs) = limpiar xs ys
                   | otherwise = y : limpiar xs ys
+
+difPromedio :: [Float] -> [Float]
+difPromedio [] = []
+difPromedio (x:xs) = (x - promedio(x:xs)) : difPromedio(xs)
+
+promedio :: [Float] -> Float
+promedio xs = sum xs / fromIntegral(length xs)
+
+todosIguales :: [Int] -> Bool
+todosIguales [] = True
+todosIguales[_] = True
+todosIguales (x:y:xs) = ((x == y) && todosIguales(y:xs)) 
