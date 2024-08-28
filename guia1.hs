@@ -23,3 +23,22 @@ flipAll = map flip
 
 --Si flip :: (a->b->c) -> b -> a -> c  entonces flip flip :: b -> (a->b->c) -> a -> c 
 flipRaro = flip flip
+
+--ej2
+curry2 :: ((a,b) -> c) -> (a -> b -> c)
+curry2 f x y = f(x,y)
+
+--f para probar curry: curry2 addTuple 2 2
+addTuple :: (Int, Int) -> Int
+addTuple (x, y) = x + y
+
+uncurry2 :: (a -> b -> c) -> ((a,b) -> c)
+uncurry2 f(x,y) = f x y
+
+--f para probar uncurry: uncurry2 add2 (2,2)
+add2 :: Int -> Int -> Int
+add2 x y = x + y
+
+--curryN :: curryN :: ((a, b, ..., z) -> r) -> (a -> b -> ... -> z -> r)
+
+--ej3
