@@ -41,4 +41,44 @@ add2 x y = x + y
 
 --curryN :: curryN :: ((a, b, ..., z) -> r) -> (a -> b -> ... -> z -> r)
 
+--foldr:: (a -> b -> b) -> b -> [a] -> b
 --ej3
+sumConFoldr :: [Float] -> Float
+sumConFoldr = foldr (+) 0 
+
+concatConFoldr :: [a] -> [a] -> [a]
+concatConFoldr xs ys = foldr (:) ys xs
+
+elemConFoldr ::  Eq a => a -> [a] -> Bool 
+elemConFoldr y = foldr (\x acc -> (x == y) || acc) False 
+
+filterConFoldr :: (a -> Bool) -> [a] -> [a]
+filterConFoldr f = foldr (\x rec -> if f x then x : rec else rec) []
+
+mapConFoldr :: (a -> a) -> [a] -> [a]
+mapConFoldr f = foldr(\x rec -> f x : rec) []
+
+mejorSegun ::  (a -> a -> Bool) -> [a] -> a
+mejorSegun f = foldr1 (\x rec -> if f x rec then x else rec)
+
+sumasParciales ::  Num a => [a] -> [a]
+sumasParciales = foldl(\rec x -> rec ++ (if null rec then [x] else [x + last rec])) []
+
+sumaAlt :: Num a => [a] -> a 
+sumaAlt = foldr1 (-)
+
+sumaAlt2 :: Num a => [a] -> a 
+sumaAlt2 = foldl1 (flip (-)) 
+
+--ej5
+elementosEnPosicionesPares :: [a] -> [a]
+elementosEnPosicionesPares [] = []
+elementosEnPosicionesPares (x:xs) = if null xs then [x] else x : elementosEnPosicionesPares (tail xs)
+--Rec global, no se puede reescribir (facilmente) con fold
+entrelazar :: [a] -> [a] -> [a]
+entrelazar [] = id
+entrelazar (x:xs) = \ys -> if null ys then x : entrelazar xs [] else x : head ys : entrelazar xs (tail ys)
+
+entrelazarConFoldr :: [a] -> [a] -> [a] 
+entrelazarConFoldr = foldr f (const [])
+    where f = \x acc yys -> if null yys then x : acc [] else x : head yys : acc (tail yys)
